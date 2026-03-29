@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Port Scanner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: #0d1117;
+            color: #e6edf3;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            width: 36px;
+            height: 36px;
+            background: #ffb300;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: #0d1117;
+        }
+
+        h1 {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .subtitle {
+            font-size: 11px;
+            color: #7d8590;
+            margin-top: 2px;
+        }
+
+        .panel {
+            background: #161b22;
+            border: 0.5px solid #30363d;
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .panel-title {
+            font-size: 11px;
+            color: #7d8590;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            font-size: 11px;
+            color: #7d8590;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            background: #0d1117;
+            border: 0.5px solid #30363d;
+            border-radius: 4px;
+            color: #e6edf3;
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            padding: 8px 10px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #ffb300;
+        }
+
+        .btn {
+            background: #ffb300;
+            border: none;
+            border-radius: 4px;
+            color: #0d1117;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 10px 20px;
+            letter-spacing: 0.05em;
+        }
+
+        .btn:hover {
+            background: #ffc933;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 0.5px solid #30363d;
+            color: #7d8590;
+            margin-left: 8px;
+        }
+
+        .btn-outline:hover {
+            border-color: #ffb300;
+            color: #ffb300;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .metric {
+            background: #161b22;
+            border: 0.5px solid #30363d;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+
+        .metric-label {
+            font-size: 10px;
+            color: #7d8590;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+
+        .metric-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: #ffb300;
+        }
+
+        .metric-sub {
+            font-size: 10px;
+            color: #7d8590;
+            margin-top: 2px;
+        }
+
+        .results-header {
+            display: grid;
+            grid-template-columns: 60px 80px 1fr 150px 80px;
+            gap: 12px;
+            font-size: 10px;
+            color: #7d8590;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0 0 8px;
+            border-bottom: 0.5px solid #21262d;
+            margin-bottom: 8px;
+        }
+
+        .result-row {
+            display: grid;
+            grid-template-columns: 60px 80px 1fr 150px 80px;
+            gap: 12px;
+            font-size: 12px;
+            padding: 8px 0;
+            border-bottom: 0.5px solid #161b22;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .badge-open {
+            background: #0f3d23;
+            color: #3fb950;
+        }
+
+        .badge-closed {
+            background: #1a1a1a;
+            color: #7d8590;
+        }
+
+        .badge-filtered {
+            background: #2d1f00;
+            color: #f0883e;
+        }
+
+        .banner-text {
+            font-size: 11px;
+            color: #7d8590;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .progress-bar {
+            height: 3px;
+            background: #21262d;
+            border-radius: 2px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #ffb300;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #7d8590;
+            font-size: 12px;
+        }
+
+        .port-num {
+            color: #ffb300;
+            font-weight: 700;
+        }
+
+        .service-name {
+            color: #58a6ff;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #238636;
+            display: inline-block;
+            margin-right: 6px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: 0.3
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">PS</div>
+        <div>
+            <h1>PORT SCANNER</h1>
+            <div class="subtitle">Network Recon & Service Detection Tool</div>
+        </div>
+        <div style="margin-left:auto; font-size:11px; color:#7d8590;">
+            <span class="status-dot"></span>ready
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-title">Scan Configuration</div>
+        <div class="form-row">
+            <div>
+                <label>Target Host / IP</label>
+                <input type="text" placeholder="192.168.1.1 or scanme.nmap.org" id="host" value="127.0.0.1">
+            </div>
+            <div>
+                <label>Port Range</label>
+                <input type="text" placeholder="1-1024 or 80,443,8080" id="portRange" value="1-1024">
+            </div>
+            <div>
+                <label>Threads</label>
+                <input type="number" placeholder="100" id="threads" value="100" min="1" max="500">
+            </div>
+        </div>
+        <button class="btn" onclick="startScan()">▶ Run Scan</button>
+        <button class="btn btn-outline" onclick="runBenchmark()">⚡ Benchmark</button>
+        <div class="progress-bar">
+            <div class="progress-fill" id="prog"></div>
+        </div>
+    </div>
+
+    <div class="metrics">
+        <div class="metric">
+            <div class="metric-label">Open Ports</div>
+            <div class="metric-value" id="m-open">—</div>
+            <div class="metric-sub">detected</div>
+        </div>
+        <div class="metric">
+            <div class="metric-label">Ports Scanned</div>
+            <div class="metric-value" id="m-total">—</div>
+            <div class="metric-sub">total</div>
+        </div>
+        <div class="metric">
+            <div class="metric-label">Duration</div>
+            <div class="metric-value" id="m-time">—</div>
+            <div class="metric-sub">seconds</div>
+        </div>
+        <div class="metric">
+            <div class="metric-label">Throughput</div>
+            <div class="metric-value" id="m-rate">—</div>
+            <div class="metric-sub">ports/sec</div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-title">Scan Results</div>
+        <div id="results-area">
+            <div class="empty-state">run a scan to see results here</div>
+        </div>
+    </div>
+
+    <script>
+        let scanning = false;
+
+        function startScan() {
+            if (scanning) return;
+            const host = document.getElementById('host').value;
+            const portRange = document.getElementById('portRange').value;
+            const threads = document.getElementById('threads').value;
+
+            scanning = true;
+            document.getElementById('prog').style.width = '30%';
+            document.getElementById('results-area').innerHTML = '<div class="empty-state">scanning...</div>';
+
+            fetch('http://localhost:5000/scan', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ host, port_range: portRange, threads: parseInt(threads) })
+            })
+                .then(r => r.json())
+                .then(data => {
+                    document.getElementById('prog').style.width = '100%';
+                    document.getElementById('m-open').textContent = data.open_ports;
+                    document.getElementById('m-total').textContent = data.total_ports_scanned;
+                    document.getElementById('m-time').textContent = data.duration_seconds.toFixed(1);
+                    document.getElementById('m-rate').textContent = data.ports_per_second;
+
+                    const openResults = data.results.filter(r => r.state === 'open');
+
+                    if (openResults.length === 0) {
+                        document.getElementById('results-area').innerHTML = '<div class="empty-state">no open ports found in range</div>';
+                    } else {
+                        let html = '<div class="results-header"><span>Port</span><span>State</span><span>Service</span><span>Banner</span><span>Latency</span></div>';
+                        for (const r of openResults) {
+                            const sslTag = r.ssl?.enabled ? ' <span style="color:#3fb950;font-size:10px">[TLS]</span>' : '';
+                            html += `<div class="result-row">
+              <span class="port-num">${r.port}</span>
+              <span><span class="badge badge-open">OPEN</span></span>
+              <span class="service-name">${r.service}${sslTag}</span>
+              <span class="banner-text" title="${r.banner || ''}">${r.banner || '—'}</span>
+              <span style="color:#7d8590">${r.latency_ms ? r.latency_ms + 'ms' : '—'}</span>
+            </div>`;
+                        }
+                        document.getElementById('results-area').innerHTML = html;
+                    }
+                    setTimeout(() => { document.getElementById('prog').style.width = '0%'; }, 1000);
+                    scanning = false;
+                })
+                .catch(() => {
+                    document.getElementById('results-area').innerHTML = '<div class="empty-state" style="color:#f85149">error: make sure the backend is running (python app.py)</div>';
+                    document.getElementById('prog').style.width = '0%';
+                    scanning = false;
+                });
+        }
+
+        function runBenchmark() {
+            document.getElementById('results-area').innerHTML = '<div class="empty-state">running benchmark — this scans ports 1-200 twice, takes ~30 seconds...</div>';
+            document.getElementById('prog').style.width = '60%';
+
+            fetch('http://localhost:5000/benchmark', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ host: document.getElementById('host').value })
+            })
+                .then(r => r.json())
+                .then(data => {
+                    document.getElementById('prog').style.width = '100%';
+                    document.getElementById('results-area').innerHTML = `
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:1rem 0">
+            <div style="background:#0d1117;border-radius:6px;padding:1.25rem">
+              <div style="font-size:11px;color:#7d8590;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px">Concurrent (Threaded)</div>
+              <div style="font-size:28px;font-weight:700;color:#3fb950">${data.concurrent.duration_seconds.toFixed(1)}s</div>
+              <div style="font-size:11px;color:#7d8590;margin-top:4px">${data.concurrent.ports_per_second} ports/sec</div>
+            </div>
+            <div style="background:#0d1117;border-radius:6px;padding:1.25rem">
+              <div style="font-size:11px;color:#7d8590;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px">Sequential (Baseline)</div>
+              <div style="font-size:28px;font-weight:700;color:#f85149">${data.sequential.duration_seconds.toFixed(1)}s</div>
+              <div style="font-size:11px;color:#7d8590;margin-top:4px">${data.sequential.ports_per_second} ports/sec</div>
+            </div>
+          </div>
+          <div style="background:#0d1117;border-radius:6px;padding:1.25rem;text-align:center;margin-top:0">
+            <div style="font-size:11px;color:#7d8590;margin-bottom:8px">SPEEDUP FACTOR</div>
+            <div style="font-size:40px;font-weight:700;color:#ffb300">${data.speedup_factor}x</div>
+            <div style="font-size:11px;color:#7d8590;margin-top:4px">concurrent is ${data.speedup_factor}x faster than sequential</div>
+          </div>`;
+                    setTimeout(() => { document.getElementById('prog').style.width = '0%'; }, 1000);
+                })
+                .catch(() => {
+                    document.getElementById('results-area').innerHTML = '<div class="empty-state" style="color:#f85149">error: make sure the backend is running</div>';
+                    document.getElementById('prog').style.width = '0%';
+                });
+        }
+    </script>
+</body>
+
+</html>
