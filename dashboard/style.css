@@ -1,0 +1,261 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Space Mono', monospace;
+    background: #0d1117;
+    color: #e6edf3;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    width: 36px;
+    height: 36px;
+    background: #ffb300;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #0d1117;
+}
+
+h1 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.subtitle {
+    font-size: 11px;
+    color: #7d8590;
+    margin-top: 2px;
+}
+
+.panel {
+    background: #161b22;
+    border: 0.5px solid #30363d;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.panel-title {
+    font-size: 11px;
+    color: #7d8590;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 1rem;
+}
+
+label {
+    font-size: 11px;
+    color: #7d8590;
+    display: block;
+    margin-bottom: 6px;
+}
+
+input {
+    width: 100%;
+    background: #0d1117;
+    border: 0.5px solid #30363d;
+    border-radius: 4px;
+    color: #e6edf3;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    padding: 8px 10px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #ffb300;
+}
+
+.btn {
+    background: #ffb300;
+    border: none;
+    border-radius: 4px;
+    color: #0d1117;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 10px 20px;
+    letter-spacing: 0.05em;
+}
+
+.btn:hover {
+    background: #ffc933;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 0.5px solid #30363d;
+    color: #7d8590;
+    margin-left: 8px;
+}
+
+.btn-outline:hover {
+    border-color: #ffb300;
+    color: #ffb300;
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 1rem;
+}
+
+.metric {
+    background: #161b22;
+    border: 0.5px solid #30363d;
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+.metric-label {
+    font-size: 10px;
+    color: #7d8590;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+}
+
+.metric-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffb300;
+}
+
+.metric-sub {
+    font-size: 10px;
+    color: #7d8590;
+    margin-top: 2px;
+}
+
+.results-header {
+    display: grid;
+    grid-template-columns: 60px 80px 1fr 150px 80px;
+    gap: 12px;
+    font-size: 10px;
+    color: #7d8590;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0 0 8px;
+    border-bottom: 0.5px solid #21262d;
+    margin-bottom: 8px;
+}
+
+.result-row {
+    display: grid;
+    grid-template-columns: 60px 80px 1fr 150px 80px;
+    gap: 12px;
+    font-size: 12px;
+    padding: 8px 0;
+    border-bottom: 0.5px solid #161b22;
+    align-items: center;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.badge-open {
+    background: #0f3d23;
+    color: #3fb950;
+}
+
+.badge-closed {
+    background: #1a1a1a;
+    color: #7d8590;
+}
+
+.badge-filtered {
+    background: #2d1f00;
+    color: #f0883e;
+}
+
+.banner-text {
+    font-size: 11px;
+    color: #7d8590;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.progress-bar {
+    height: 3px;
+    background: #21262d;
+    border-radius: 2px;
+    margin-top: 12px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #ffb300;
+    width: 0%;
+    transition: width 0.3s;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #7d8590;
+    font-size: 12px;
+}
+
+.port-num {
+    color: #ffb300;
+    font-weight: 700;
+}
+
+.service-name {
+    color: #58a6ff;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #238636;
+    display: inline-block;
+    margin-right: 6px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1
+    }
+
+    50% {
+        opacity: 0.3
+    }
+}
