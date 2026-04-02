@@ -27,18 +27,39 @@
                     <input type="text" placeholder="192.168.1.1 or scanme.nmap.org" id="host" value="127.0.0.1">
                 </div>
                 <div>
-                    <label>Port Range</label>
-                    <input type="text" placeholder="1-1024 or 80,443,8080" id="portRange" value="1-1024">
-                </div>
-                <div>
                     <label>Threads</label>
                     <input type="number" placeholder="100" id="threads" value="100" min="1" max="500">
                 </div>
             </div>
             <button class="btn" onclick="startScan()">▶ Run Scan</button>
-            <button class="btn btn-outline" onclick="runBenchmark()">⚡ Benchmark</button>
-            <div class="progress-bar">
-                <div class="progress-fill" id="prog"></div>
+            <div style="display: flex; gap: 12px; align-items: center; margin-top: 12px;">
+                <div style="font-size: 11px; color: #7d8590; min-width: 70px;">Scan Progress</div>
+                <div class="progress-bar" style="flex: 1;">
+                    <div class="progress-fill" id="scan-prog"></div>
+                </div>
+                <div id="scan-counter" style="font-size: 11px; color: #7d8590; min-width: 50px; text-align: right;">—</div>
+            </div>
+            
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #30363d;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                    <div>
+                        <label>Benchmark Port Range</label>
+                        <input type="text" placeholder="1-200" id="benchmarkPortRange" value="1-200">
+                    </div>
+                    <div>
+                        <label>Benchmark Threads</label>
+                        <input type="number" placeholder="100" id="benchmarkThreads" value="100" min="1" max="500">
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn btn-outline" onclick="runBenchmark()" style="margin-top: 12px;">⚡ Run Benchmark</button>
+            <div style="display: flex; gap: 12px; align-items: center; margin-top: 12px;">
+                <div style="font-size: 11px; color: #7d8590; min-width: 70px;">Benchmark</div>
+                <div class="progress-bar" style="flex: 1;">
+                    <div class="progress-fill" id="benchmark-prog"></div>
+                </div>
+                <div id="benchmark-counter" style="font-size: 11px; color: #7d8590; min-width: 50px; text-align: right;">—</div>
             </div>
         </div>
 
